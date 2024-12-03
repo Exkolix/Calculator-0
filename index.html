@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculator</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="assets\cal-icon.png" class="icon">
+</head>
+<body>
+    <div class="container">
+        <div class="displayPanel">
+            <input id="secDisplay" readonly class="secDisplay">
+            <input id="display" readonly class="display">
+        </div>
+        
+        <div class="buttons">
+            <div class="calRow">
+                <button onclick="clearDisplay('')" class="special">C</button>
+                <button onclick="toggleSign()" class="special">±</button>
+                <button onclick="calculatePercentage()" class="special">%</button>
+                <button onclick="addToDisplay('/')" class="operator">÷</button>
+            </div>
+            
+            <div class="calRow">
+                <button onclick="addToDisplay('7')" class="numButton">7</button>
+                <button onclick="addToDisplay('8')" class="numButton">8</button>
+                <button onclick="addToDisplay('9')" class="numButton">9</button>
+                <button onclick="addToDisplay('*')" class="operator">x</button>
+            </div>
+            
+            <div class="calRow">
+                <button onclick="addToDisplay('4')" class="numButton">4</button>
+                <button onclick="addToDisplay('5')" class="numButton">5</button>
+                <button onclick="addToDisplay('6')" class="numButton">6</button>
+                <button onclick="addToDisplay('-')" class="operator">-</button>
+            </div>
+            
+
+            <div class="calRow">
+                <button onclick="addToDisplay('1')" class="numButton">1</button>
+                <button onclick="addToDisplay('2')" class="numButton">2</button>
+                <button onclick="addToDisplay('3')" class="numButton">3</button>
+                <button onclick="addToDisplay('+')" class="operator">+</button>
+            </div>
+            
+            <div class="calRow">
+                <button onclick="addToDisplay('0')" class="numButton" id="numZero">0</button>
+                <button onclick="addToDisplay('.')" class="numButton">.</button>
+                <button onclick="calculate('=')" class="operator">=</button>
+            </div>
+            
+        </div>
+    </div>
+    <script src="main.js"></script>
+</body>
+</html>
