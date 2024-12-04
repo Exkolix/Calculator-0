@@ -21,3 +21,425 @@
     <button class="number zero">0</button>
     <button class="number">.</button>
     <button class="operator">=</button>
+
+
+    //////////////////////////////////////////////////
+
+
+
+    <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculator</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="assets\cal-icon.png" class="icon">
+</head>
+<body>
+    <div class="container">
+        <div class="box">
+            <div class="displayPanel">
+                <input id="secDisplay" readonly class="secDisplay">
+                <input id="display" readonly class="display">
+            </div>
+            
+            <div class="buttonsTab">
+                <div class="calRow">
+                    <button onclick="clearDisplay('')" class="special">C</button>
+                    <button onclick="toggleSign()" class="special">±</button>
+                    <button onclick="calculatePercentage()" class="special">%</button>
+                    <button onclick="addToDisplay('/')" class="operator">÷</button>
+                </div>
+                
+                <div class="calRow">
+                    <button onclick="addToDisplay('7')" class="numButton">7</button>
+                    <button onclick="addToDisplay('8')" class="numButton">8</button>
+                    <button onclick="addToDisplay('9')" class="numButton">9</button>
+                    <button onclick="addToSecDisplay('*')" class="operator">x</button>
+                </div>
+                
+                <div class="calRow">
+                    <button onclick="addToDisplay('4')" class="numButton">4</button>
+                    <button onclick="addToDisplay('5')" class="numButton">5</button>
+                    <button onclick="addToDisplay('6')" class="numButton">6</button>
+                    <button onclick="addToDisplay('-')" class="operator">-</button>
+                </div>
+                
+    
+                <div class="calRow">
+                    <button onclick="addToDisplay('1')" class="numButton">1</button>
+                    <button onclick="addToDisplay('2')" class="numButton">2</button>
+                    <button onclick="addToDisplay('3')" class="numButton">3</button>
+                    <button onclick="addToDisplay('+')" class="operator">+</button>
+                </div>
+                
+                <div class="calRow">
+                    <button onclick="addToDisplay('0')" class="numButton" id="numZero">0</button>
+                    <button onclick="addToDisplay('.')" class="numButton">.</button>
+                    <button onclick="calculate('=')" class="operator">=</button>
+                </div>
+                
+            </div>
+        </div>
+        </div>
+        
+    <script src="main.js"></script>
+</body>
+</html>
+
+
+/////////////////////////////////////////////////////////////
+
+
+
+@import url('https://fonts.cdnfonts.com/css/helvetica-neue-55');
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    /* font-weight: bold; */
+    color: white;
+    /* font-family: 'Helvetica Neue', sans-serif; */                         
+}
+body{
+    /* background-color: black; */
+    font-family: Helvetica Neue, sans-serif;
+    font-weight: 300px;
+}
+
+/* Container */
+    .container{
+        margin-top: 90px;
+        margin: 0 auto;
+        background-color: hsl(0, 0%, 5%);
+        width: 450px;
+       border-radius: 15px;
+    }
+
+
+/* Display  */
+    .secDisplay{
+        background-color: blue;
+        border: none;
+        height: 50px;
+        width: 100%;
+        font-size: 40px;
+        pointer-events: none;
+        text-align: right;
+    }
+    .display{
+        background-color: hsl(50, 100%, 50%);
+        color: white;
+        border: none;
+        width: 100%;
+        height: 100px;
+        font-size: 50px;
+        pointer-events: none;
+        text-align: right;
+    }
+    
+    
+/* Calculator row */
+    .calRow{
+        display: flex;
+        gap: 35px;
+    }
+
+
+/*General Buttons Design */
+        button{
+            cursor: pointer;
+            border: none;
+            width: 80px;
+            height: 80px;
+            border-radius: 50px;
+            font-size: 50px;
+        }
+        .buttonsTap{
+            display: grid;
+            grid-template-rows: repeat(4, 1fr);
+            grid-gap: 10px;
+            padding: 15px;
+            
+        }
+        .numButton{
+            background-color: hsl(0, 0%, 15%);
+        }
+        .numButton:hover{
+            background-color: hsl(0, 0%, 22%);
+            transition: all 0.3s ease;
+        }
+        .numButton:active{
+            background-color: hsl(0, 0%, 27%);
+        }
+    /* Specific Designs */
+    #numZero{
+        width: 190px;
+        text-align: left;
+        padding-left: 27px;
+    }
+    .special{
+        background-color: hsl(0, 0%, 30%);
+    }
+    .special:hover{
+        background-color: hsl(0, 0%, 37%);
+        transition: all 0.3 ease;
+    }
+    .operator{
+        background-color: hsl(36, 100%, 50%);
+    }
+    .operator:hover{
+        background-color: hsl(36, 100%, 55%);
+        transition: all 0.3 ease ;
+    }
+    .operator:active{
+        background-color: hsl(36, 100%, 60%);
+        transition: all 0.3 ease;
+    }
+
+
+
+
+/////////////////////////////////////////////////////////////////////
+
+
+
+const display = document.getElementById("display");
+const secDisplay = document.getElementById("secDisplay")
+
+function addToDisplay(input){
+    display.value += input;
+}
+
+function addToSecDisplay(input){
+    secDisplay.value += input;
+}
+
+function clearDisplay(){
+    display.value = "";
+    secDisplay.value ="";
+}
+
+function calculate() {
+    try {
+        display.value = eval(display.value); // Use eval for simplicity
+    } catch (error) {
+        display.value = "Error"; // Handle invalid expressions
+    }
+}
+function calculatePercentage() {
+    display.value = parseFloat(display.value) / 100;
+}
+function toggleSign() {
+    display.value = display.value.startsWith("-")
+        ? display.value.substring(1)
+        : "-" + display.value;
+}
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dual Display Calculator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="calculator">
+        <div class="display">
+            <!-- Secondary Display -->
+            <input id="secDisplay" type="text" value="" readonly>
+            <!-- Primary Display -->
+            <input id="primDisplay" type="text" value="0" readonly>
+        </div>
+        <div class="buttons">
+            <!-- First Row -->
+            <button class="special" onclick="clearDisplay()">AC</button>
+            <button class="special" onclick="toggleSign()">±</button>
+            <button class="special" onclick="calculatePercentage()">%</button>
+            <button class="operator" onclick="addOperator('/')">÷</button>
+
+            <!-- Second Row -->
+            <button class="number" onclick="addToDisplay('7')">7</button>
+            <button class="number" onclick="addToDisplay('8')">8</button>
+            <button class="number" onclick="addToDisplay('9')">9</button>
+            <button class="operator" onclick="addOperator('*')">×</button>
+
+            <!-- Third Row -->
+            <button class="number" onclick="addToDisplay('4')">4</button>
+            <button class="number" onclick="addToDisplay('5')">5</button>
+            <button class="number" onclick="addToDisplay('6')">6</button>
+            <button class="operator" onclick="addOperator('-')">−</button>
+
+            <!-- Fourth Row -->
+            <button class="number" onclick="addToDisplay('1')">1</button>
+            <button class="number" onclick="addToDisplay('2')">2</button>
+            <button class="number" onclick="addToDisplay('3')">3</button>
+            <button class="operator" onclick="addOperator('+')">+</button>
+
+            <!-- Fifth Row -->
+            <button class="numZero" onclick="addToDisplay('0')">0</button>
+            <button class="number" onclick="addToDisplay('.')">.</button>
+            <button class="operator" onclick="calculate()">=</button>
+        </div>
+    </div>
+    <script src="main.js"></script>
+</body>
+</html>
+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ body {
+    background-color: #f4f4f4;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.calculator {
+    background-color: #d1d1d6;
+    width: 320px;
+    border-radius: 20px;
+    padding: 20px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+.display {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.display input {
+    width: 100%;
+    height: 50px;
+    background-color: #f9f9f9;
+    border: none;
+    border-radius: 15px;
+    text-align: right;
+    font-size: 1.5rem;
+    padding: 10px;
+    color: #000;
+    font-weight: bold;
+    box-shadow: inset 0 -2px 2px rgba(0, 0, 0, 0.1);
+}
+
+#secDisplay {
+    font-size: 1rem;
+    color: #555;
+}
+
+.buttons {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+}
+
+button {
+    height: 70px;
+    font-size: 1.5rem;
+    border: none;
+    border-radius: 15px;
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+button.number {
+    background-color: #e0e0e0;
+}
+
+button.number:hover {
+    background-color: #d6d6d6;
+}
+
+button.operator {
+    background-color: #ff9500;
+    color: white;
+}
+
+button.operator:hover {
+    background-color: #ffab40;
+}
+
+button.special {
+    background-color: #c6c6c8;
+    color: #000;
+}
+
+button.special:hover {
+    background-color: #bcbcbc;
+}
+
+button.numZero {
+    grid-column: span 2;
+}
+
+button:active {
+    transform: scale(0.95);
+    box-shadow: 0 2px 3px rgba(0, 0, 0, 0.2);
+}
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+const primDisplay = document.getElementById("primDisplay");
+const secDisplay = document.getElementById("secDisplay");
+let currentInput = ""; // Tracks the current input
+let equation = ""; // Tracks the full equation
+
+function addToDisplay(value) {
+    if (primDisplay.value === "0" || currentInput === "0") {
+        currentInput = value;
+    } else {
+        currentInput += value;
+    }
+    primDisplay.value = currentInput;
+}
+
+function addOperator(operator) {
+    if (currentInput === "") return; // Prevent multiple operators in a row
+
+    equation += currentInput + operator;
+    secDisplay.value = equation; // Update secondary display
+    currentInput = ""; // Clear current input for the next number
+    primDisplay.value = "0"; // Reset primary display
+}
+
+function clearDisplay() {
+    currentInput = "";
+    equation = "";
+    primDisplay.value = "0";
+    secDisplay.value = "";
+}
+
+function toggleSign() {
+    if (currentInput.startsWith("-")) {
+        currentInput = currentInput.substring(1);
+    } else {
+        currentInput = "-" + currentInput;
+    }
+    primDisplay.value = currentInput;
+}
+
+function calculatePercentage() {
+    currentInput = (parseFloat(currentInput) / 100).toString();
+    primDisplay.value = currentInput;
+}
+
+function calculate() {
+    if (currentInput !== "") {
+        equation += currentInput; // Add the last number to the equation
+    }
+    try {
+        const result = eval(equation.replace("×", "*").replace("÷", "/"));
+        primDisplay.value = result;
+        secDisplay.value = equation + " =";
+        equation = ""; // Clear the equation after calculation
+        currentInput = result.toString(); // Set the result as the next input
+    } catch (e) {
+        primDisplay.value = "Error";
+    }
+}
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
