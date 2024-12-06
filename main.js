@@ -1,3 +1,7 @@
+const display = document.getElementById("display");
+const secDisplay = document.getElementById("secDisplay");
+let currentInput = ""; 
+let equation = "";
 function addToDisplay(value) {
     if (value === ".") {
         if (currentInput.includes(".")) return;
