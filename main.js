@@ -1,7 +1,5 @@
-// Display functions
 function addToDisplay(value) {
     if (value === ".") {
-        // Prevent multiple decimal points
         if (currentInput.includes(".")) return;
     }
 
@@ -14,16 +12,6 @@ function addToDisplay(value) {
     display.value = formatWithCommas(currentInput);
 }
 
-// Format numbers with commas
-function formatWithCommas(value) {
-    if (value.includes(".")) {
-        // Split into integer and decimal parts
-        const [integer, decimal] = value.split(".");
-        return parseInt(integer, 10).toLocaleString() + "." + decimal;
-    }
-    // Format integer part only
-    return parseInt(value, 10).toLocaleString();
-}
 
 function addOperator(operator) {
     if (currentInput === "") return;
@@ -34,22 +22,6 @@ function addOperator(operator) {
     display.value = "0";
 }
 
-// Clear/Delete button behavior
-function deleteOrClear() {
-    if (clearTimeoutId) {
-        clearTimeout(clearTimeoutId);
-    }
-
-    if (currentInput.length > 0) {
-        // Delete the last character of the current input
-        currentInput = currentInput.slice(0, -1);
-        display.value = formatWithCommas(currentInput) || "0"; // Display "0" if input is empty
-    } else if (equation.length > 0) {
-        // Remove the last character from the equation if currentInput is empty
-        equation = equation.slice(0, -1);
-        secDisplay.value = equation;
-    }
-}
 
 function clearDisplay() {
     currentInput = "";
@@ -57,6 +29,41 @@ function clearDisplay() {
     display.value = "0";
     secDisplay.value = "";
 }
+function deleteLastCharacter() {
+    if (currentInput.length > 0) {
+        currentInput = currentInput.slice(0, -1);
+        display.value = currentInput || "0";
+    } else if (equation.length > 0) {
+        equation = equation.slice(0, -1);
+        secDisplay.value = equation;
+    }
+}
+let clearTimeoutId;
+
+function handleClearDelete() {
+    const clearButton = document.getElementById("clearButton");
+
+    clearButton.addEventListener("mousedown", () => {
+        clearTimeoutId = setTimeout(clearDisplay, 500);
+    });
+
+    clearButton.addEventListener("mouseup", () => {
+        if (clearTimeoutId) {
+            clearTimeout(clearTimeoutId);
+            deleteLastCharacter();
+        }
+    });
+
+    clearButton.addEventListener("mouseleave", () => {
+        if (clearTimeoutId) {
+            clearTimeout(clearTimeoutId);
+        }
+    });
+}
+
+// Call this function once after the DOM has loaded
+handleClearDelete();
+
 
 // Special function
 function toggleSign() {
@@ -86,4 +93,15 @@ function calculate() {
     } catch (e) {
         display.value = "Error";
     }
+}
+
+// Format numbers with commas
+function formatWithCommas(value) {
+    if (value.includes(".")) {
+        // Split into integer and decimal parts
+        const [integer, decimal] = value.split(".");
+        return parseInt(integer, 10).toLocaleString() + "." + decimal;
+    }
+    // Format integer part only
+    return parseInt(value, 10).toLocaleString();
 }

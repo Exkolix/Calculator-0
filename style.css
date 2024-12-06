@@ -91,7 +91,7 @@ body {
     }
     .operator:hover{
         background-color: hsl(36, 100%, 55%);
-        transition: all 0.3 ease;
+        transition: all 0.1s ease;
     }
 
     .special{
@@ -99,7 +99,7 @@ body {
     }
     .special:hover{
         background-color: hsl(0, 0%, 55%);
-        transition: all 0.3 ease;
+        transition: all 0.1s ease;
     }
 
     .numButton{
@@ -107,7 +107,7 @@ body {
     }
     .numButton:hover{
         background-color: hsl(0, 0%, 25%);
-        transition: all 0.3 ease;
+        transition: all 0.1s ease;
     }
 
     #numZero{
@@ -115,4 +115,7 @@ body {
         text-align: left;
         padding-left: 30px;
     }
-    
+    #clearButton:active{
+        transition: all 0.3s ease;
+        background-color: hsl(0, 0%, 70%);
+    }
