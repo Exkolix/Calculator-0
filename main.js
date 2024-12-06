@@ -1,17 +1,28 @@
-const display = document.getElementById("display");
-const secDisplay = document.getElementById("secDisplay");
-let currentInput = ""; // Tracks the current input
-let equation = ""; // Tracks the full equation
-
-
 // Display functions
 function addToDisplay(value) {
+    if (value === ".") {
+        // Prevent multiple decimal points
+        if (currentInput.includes(".")) return;
+    }
+
     if (display.value === "0" || currentInput === "0") {
         currentInput = value;
     } else {
         currentInput += value;
     }
-    display.value = currentInput;
+
+    display.value = formatWithCommas(currentInput);
+}
+
+// Format numbers with commas
+function formatWithCommas(value) {
+    if (value.includes(".")) {
+        // Split into integer and decimal parts
+        const [integer, decimal] = value.split(".");
+        return parseInt(integer, 10).toLocaleString() + "." + decimal;
+    }
+    // Format integer part only
+    return parseInt(value, 10).toLocaleString();
 }
 
 function addOperator(operator) {
@@ -22,62 +33,44 @@ function addOperator(operator) {
     currentInput = ""; 
     display.value = "0";
 }
-// Clear button
+
+// Clear/Delete button behavior
+function deleteOrClear() {
+    if (clearTimeoutId) {
+        clearTimeout(clearTimeoutId);
+    }
+
+    if (currentInput.length > 0) {
+        // Delete the last character of the current input
+        currentInput = currentInput.slice(0, -1);
+        display.value = formatWithCommas(currentInput) || "0"; // Display "0" if input is empty
+    } else if (equation.length > 0) {
+        // Remove the last character from the equation if currentInput is empty
+        equation = equation.slice(0, -1);
+        secDisplay.value = equation;
+    }
+}
+
 function clearDisplay() {
     currentInput = "";
-        equation = "";
-        display.value = "0";
-        secDisplay.value = "";
-    }
-    // Add event listeners to the "C" button
-    const clearButton = document.getElementById("btnClear");
-    clearButton.addEventListener("mousedown", handleClearPress); // Mouse hold
-    clearButton.addEventListener("mouseup", handleClearRelease); // Mouse release
-    clearButton.addEventListener("mouseleave", handleClearRelease); // Mouse leaves button
-    clearButton.addEventListener("touchstart", handleClearPress); // Touch hold
-    clearButton.addEventListener("touchend", handleClearRelease); // Touch release
-    
-    // Update Backspace Key Behavior
-    document.addEventListener("keydown", (event) => {
-        if (event.key === "Backspace") {
-            handleClearRelease();
-        }
-    });
-    let clearButtonTimer; // Timer for holding down the button
-
-// Clear display or delete last character based on button press duration
-function handleClearPress() {
-    clearButtonTimer = setTimeout(() => {
-        // Long press clears everything
-        clearDisplay();
-    }, 500); // 500ms for long press
+    equation = "";
+    display.value = "0";
+    secDisplay.value = "";
 }
 
-function handleClearRelease() {
-    clearTimeout(clearButtonTimer); // Cancel long press action if released early
-
-    // Short press: perform backspace
-    if (currentInput.length > 0) {
-        currentInput = currentInput.slice(0, -1); // Remove last character
-        display.value = currentInput || "0"; // Update primary display
-    } else if (equation.length > 0 && currentInput === "") {
-        equation = equation.slice(0, -1); // Remove the last operator
-        secDisplay.value = equation; // Update secondary display
-    }
-}
-
-    // Special function
+// Special function
 function toggleSign() {
     if (currentInput.startsWith("-")) {
         currentInput = currentInput.substring(1);
     } else {
         currentInput = "-" + currentInput;
     }
-    display.value = currentInput;
+    display.value = formatWithCommas(currentInput);
 }
+
 function calculatePercentage() {
     currentInput = (parseFloat(currentInput) / 100).toString();
-    display.value = currentInput;
+    display.value = formatWithCommas(currentInput);
 }
 
 function calculate() {
@@ -86,7 +79,7 @@ function calculate() {
     }
     try {
         const result = eval(equation.replace("×", "*").replace("÷", "/"));
-        display.value = result;
+        display.value = formatWithCommas(result.toString());
         secDisplay.value = equation + " =";
         equation = "";
         currentInput = result.toString();
@@ -94,48 +87,3 @@ function calculate() {
         display.value = "Error";
     }
 }
-
-
-// Takes in keyboard input
-document.addEventListener("keydown", handleKeyPress);
-
-// Get the key pressed
-function handleKeyPress(event) {
-    const key = event.key; 
-
-    if (!isNaN(key)) {
-        // If the key is a number (0-9)
-        simulateButtonPress(`btn${key}`);
-        addToDisplay(key);
-    } else if (key === "+" || key === "-" || key === "*" || key === "/") {
-        // if Operators
-        simulateButtonPress(`btn${key}`);
-        addOperator(key);
-    } else if (key === "Enter" || key === "=") {
-        // Enter or equals key for calculation
-        event.preventDefault(); // Prevent form submission if in a form
-        simulateButtonPress("btnEquals");
-        calculate();
-    } else if (key === "Escape") {
-        // Escape key for clear all
-        simulateButtonPress("btnClear");
-        clearDisplay();
-    } else if (key === ".") {
-        // Decimal point
-        simulateButtonPress("btnDecimal");
-        addToDisplay(".");
-    }
-}
-
-// Simulate button press visually
-function simulateButtonPress(buttonId) {
-    const button = document.getElementById(buttonId);
-    if (button) {
-        button.classList.add("pressed");
-        setTimeout(() => button.classList.remove("pressed"), 150); // Remove highlight after 150ms
-    }
-}
-
-
-
-
