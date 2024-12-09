@@ -44,25 +44,30 @@ body {
         margin-bottom: 10px;
     }
     /* Secodry display */
-        .secDisplay{
+        .secDisplay {
             background-color: hsl(0, 0%, 0%);
             color: rgba(255, 255, 255, 0.671);
             text-align: right;
             height: 50px;
             width: 100%;
             font-size: 1.3rem;
+            text-overflow: ellipsis;
+            white-space: nowrap;
             border: none;
+            transition: font-size 0.2s ease;
         }
     /* Primary display */
-    .display{
+    .display {
         background-color: hsl(0, 0%, 0%);
-        counter-reset: white;
         text-align: right;
         height: 70px;
         width: 100%;
         font-size: 3rem;
+        text-overflow: ellipsis; /* Show "..." for overflowing text */
+        white-space: nowrap; /* Prevent text wrapping */
         border: none;
-        }
+        transition: font-size 0.2s ease;
+    }
 
 
 

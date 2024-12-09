@@ -443,3 +443,28 @@ function calculate() {
     }
 }
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+<!-- <div class="scientificSection" id="scientificSection">
+
+            <div class="sciButtonsTab">
+                <button onclick="addToDisplay('sin(')" class="special">sin</button>
+                <button onclick="addToDisplay('cos(')" class="special">cos</button>
+                <button onclick="addToDisplay('tan(')" class="special">tan</button>
+                <button onclick="addToDisplay('sqrt(')" class="special">√</button>
+
+                <button onclick="addToDisplay('log(')" class="special">log</button>
+                <button onclick="addToDisplay('exp(')" class="special">exp</button>
+                <button onclick="addToDisplay('pi')" class="special">π</button>
+                <button onclick="addOperator('**')" class="operator">^</button>
+
+                <button onclick="addToDisplay('(')" class="numButton">(</button>
+                <button onclick="addToDisplay(')')" class="numButton">)</button>
+                <button onclick="addToDisplay('e')" class="special">e</button>
+                <button onclick="calculateScientific()" class="operator">=</button>
+                
+                <button onclick="square()" class="special">x²</button>
+                <button onclick="cube()" class="special">x³</button>
+                <button onclick="inverse()" class="special">1/x</button>
+            </div>
+        </div> -->
+    </div>
+        <button onclick="sciExpand()"></button>

@@ -5,23 +5,32 @@ let equation = "";
 
 
 function addToDisplay(value) {
-    if (value === ".") {
-        if (currentInput.includes(".")) return; // Prevent multiple dots
-        if (currentInput === "") currentInput = "0"; // Add leading zero for "."
+    if (value === "." && currentInput.includes(".")) return; // Prevent multiple dots
+
+    if (display.value === "0" && value === "0") {
+        return; // Prevent multiple leading zeros
     }
 
     currentInput += value;
     display.value = formatWithCommas(currentInput);
+
+    // Adjust font size dynamically
+    adjustFontSize(display, 3, 1.5, 10); // Max font: 3rem, Min font: 1.5rem, Limit: 10 characters
 }
+
 
 
 function addOperator(operator) {
     if (currentInput === "") return;
-    
+
     equation += currentInput + operator;
-    secDisplay.value = equation; 
-    currentInput = ""; 
+    secDisplay.value = equation;
+
+    currentInput = "";
     display.value = "0";
+
+    // Adjust font size for secondary display
+    adjustFontSize(secDisplay, 1.3, 1, 25); // Max font: 1.3rem, Min font: 1rem, Limit: 25 characters
 }
 
 
@@ -90,15 +99,18 @@ function calculatePercentage() {
 function calculate() {
     if (currentInput !== "") {
         equation += currentInput;
-    }
-    if (equation === "") return; // Prevent calculating an empty equation
-
+    }if (equation === "") return; // Prevent calculating an empty equation
     try {
         const result = Function(`'use strict'; return (${equation})`)();
         display.value = formatWithCommas(result.toString());
         secDisplay.value = equation + " =";
+
         equation = "";
         currentInput = result.toString();
+
+        // Adjust font sizes
+        adjustFontSize(display, 3, 1.5, 10);
+        adjustFontSize(secDisplay, 1.3, 1, 25);
     } catch (e) {
         display.value = "Error";
     }
@@ -118,3 +130,9 @@ function formatWithCommas(value) {
     // Format integer part only
     return parseInt(value, 10).toLocaleString();
 }
+function adjustFontSize(displayElement, maxFontSize, minFontSize, charLimit) {
+    const contentLength = displayElement.value.length;
+    const newSize = Math.max(minFontSize, maxFontSize - (contentLength - charLimit) * 0.2);
+    displayElement.style.fontSize = contentLength > charLimit ? `${newSize}rem` : `${maxFontSize}rem`;
+}
+
