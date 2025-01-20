@@ -32,6 +32,9 @@ body {
     }
     
 /* Display */
+    input{
+        outline: none;
+    }
     .displayPanel{
         color: white;
         margin-top: 45px;
